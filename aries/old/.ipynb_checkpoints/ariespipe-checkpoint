@@ -1,0 +1,1 @@
+python ariespipe.py /home/lennart/api/aries/measure/data/kelt7/raw -dirout /home/lennart/api/aries/measure/data/kelt7/reduced -avoid_plot -do_class -npools 10 -o2do kelt7
