@@ -2,6 +2,7 @@
 
 # Import conda script
 source ~/anaconda3/etc/profile.d/conda.sh
+conda activate ariespipe_py3
 
 # Parse input parameters
 targetname=$1
@@ -17,9 +18,9 @@ python ariespipe_crosstalk.py -targetname $targetname -obsdate $obsdate
 python ariespipe_darkcorr.py -targetname $targetname -obsdate $obsdate
 
 # 3.a Find Echelle traces solution
-conda activate py27 # CERES package needs to run in python 2.7
+conda activate ariespipe_py27
 python ariespipe_findtraces.py -targetname $targetname -obsdate $obsdate
-conda activate
+conda activate ariespipe_py3
 
 # 3.b Flat fringes correction
 python ariespipe_flatcorr.py -targetname $targetname -obsdate $obsdate
@@ -28,9 +29,9 @@ python ariespipe_flatcorr.py -targetname $targetname -obsdate $obsdate
 python ariespipe_sciencecorr.py -targetname $targetname -obsdate $obsdate
 
 #4. Extract spectra from Echelle traces
-conda activate py27 # CERES package needs to run in python 2.7
+conda activate ariespipe_py27
 python ariespipe_extractspectra.py -targetname $targetname -obsdate $obsdate
-conda activate
+conda activate ariespipe_py3
 
 #5. Bad pixel correction on Spectral Time Series
 python ariespipe_badcorr.py -targetname $targetname -obsdate $obsdate
