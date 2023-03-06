@@ -1,4 +1,0 @@
-eval "$(conda shell.bash hook)"
-conda activate py27
-python traceorders.py /home/lennart/api/aries/measure/data/kelt7/processed/corquad/flat_elev15_0066.fits -dirout /home/lennart/api/aries/measure/data/kelt7/processed/temp -ext_aperture 10 -trace_degree 4
-conda deactivate

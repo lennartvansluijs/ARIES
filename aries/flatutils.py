@@ -218,61 +218,61 @@ def load_spectral_orders(fpath):
 
     return spectral_orders
 
-
-#%%
-inputdir = '/home/lennart/api/measure/output_pipeline/kelt7/darkcorr/flats_different_elevations'
-flats = get_imgs_in_dir(inputdir)
-elevations = get_elevation_from_fnames(inputdir)
-testimg = flats[0]
-
-#%%
-spectral_orders = []
-#%%
-for flat in (flats[0], flats[1], flats[4], flats[15]):
-    order_centers = load_spectral_orders(fpath='order_centers.txt')
-    spectral_order = order_centers[4]
-    settings = {
-            "borderrange" : (2,1022),
-            "stepsize" : 5,
-            "maxdistance" : 15,
-            "sigma" : 5.,
-            "osf" : 10
-    }
-    spectral_order.detect_edges(img=flat, **settings)
-    spectral_order.fit_traces()
-    spectral_orders.append(spectral_order)
-
-#%%
-for n, (elevation, spectral_order) in enumerate(zip(elevations[[0, 1, 4, 15]], spectral_orders)):
-    spectral_order.plot_edges_as_overlay(color=TABLEAU20[n*2])
-    spectral_order.plot_traces_as_overlay(color=TABLEAU20[n*2], label=elevation)
-
-plt.imshow(testimg, vmin=0, vmax=2000, cmap='Greys_r', alpha=0.5)
-plt.ylim(150, 180)
-plt.xlim(450, 500)
-plt.legend()
-plt.savefig('/home/lennart/api/measure/plots/flats_traces_multiple_elevations.pdf')
-#%%
-
-
-img = testimg
-osf = 100
-
-imgsize = img.shape[0]
-warped_spectral_order = np.zeros(shape=(osf, imgsize))
-x, _, _, _ = spectral_order.get_edges_xy()
-xrange = np.arange(1, imgsize+1)
-yrange = np.arange(1, imgsize+1)
-xrange_warped = np.arange(x.min(), x.max()+1)
-top_trace = polynomial.polyval(xrange, spectral_order.top_coefs)
-bot_trace = polynomial.polyval(xrange, spectral_order.bot_coefs)
-for x, ytop, ybot in zip(xrange_warped, top_trace, bot_trace):
-    img_slice = img[:, pixel_to_ind(x)]
-    yrange_warped = np.linspace(ybot, ytop, osf)
-    warped_spectral_order[:, pixel_to_ind(x)] = np.interp(x=yrange_warped,
-                         xp=xrange, fp=img_slice)
-
-#%%
-plt.imshow(warped_spectral_order)
-#%%
-plt.plot(np.sum(warped_spectral_order, axis=0))
+# 
+# #%%
+# inputdir = '/home/lennart/api/measure/output_pipeline/kelt7/darkcorr/flats_different_elevations'
+# flats = get_imgs_in_dir(inputdir)
+# elevations = get_elevation_from_fnames(inputdir)
+# testimg = flats[0]
+#
+# #%%
+# spectral_orders = []
+# #%%
+# for flat in (flats[0], flats[1], flats[4], flats[15]):
+#     order_centers = load_spectral_orders(fpath='order_centers.txt')
+#     spectral_order = order_centers[4]
+#     settings = {
+#             "borderrange" : (2,1022),
+#             "stepsize" : 5,
+#             "maxdistance" : 15,
+#             "sigma" : 5.,
+#             "osf" : 10
+#     }
+#     spectral_order.detect_edges(img=flat, **settings)
+#     spectral_order.fit_traces()
+#     spectral_orders.append(spectral_order)
+#
+# #%%
+# for n, (elevation, spectral_order) in enumerate(zip(elevations[[0, 1, 4, 15]], spectral_orders)):
+#     spectral_order.plot_edges_as_overlay(color=TABLEAU20[n*2])
+#     spectral_order.plot_traces_as_overlay(color=TABLEAU20[n*2], label=elevation)
+#
+# plt.imshow(testimg, vmin=0, vmax=2000, cmap='Greys_r', alpha=0.5)
+# plt.ylim(150, 180)
+# plt.xlim(450, 500)
+# plt.legend()
+# plt.savefig('/home/lennart/api/measure/plots/flats_traces_multiple_elevations.pdf')
+# #%%
+#
+#
+# img = testimg
+# osf = 100
+#
+# imgsize = img.shape[0]
+# warped_spectral_order = np.zeros(shape=(osf, imgsize))
+# x, _, _, _ = spectral_order.get_edges_xy()
+# xrange = np.arange(1, imgsize+1)
+# yrange = np.arange(1, imgsize+1)
+# xrange_warped = np.arange(x.min(), x.max()+1)
+# top_trace = polynomial.polyval(xrange, spectral_order.top_coefs)
+# bot_trace = polynomial.polyval(xrange, spectral_order.bot_coefs)
+# for x, ytop, ybot in zip(xrange_warped, top_trace, bot_trace):
+#     img_slice = img[:, pixel_to_ind(x)]
+#     yrange_warped = np.linspace(ybot, ytop, osf)
+#     warped_spectral_order[:, pixel_to_ind(x)] = np.interp(x=yrange_warped,
+#                          xp=xrange, fp=img_slice)
+#
+# #%%
+# plt.imshow(warped_spectral_order)
+# #%%
+# plt.plot(np.sum(warped_spectral_order, axis=0))
