@@ -10,7 +10,7 @@ I use Anaconda 3 to manage the dependencies. The main repository contains two ``
 conda env create -f ariespipe_py27.yml
 conda env create -f ariespipe_py3.yml
 ```
-to install all dependencies. Furthermore, I included the packages for [CERES](https://github.com/rabrahm/ceres) and [TelFit](https://github.com/kgullikson88/Telluric-Fitter) packages in the ```\lib``` folder for convenience. Please have a look at their own documentation if you run into any issues with these packages. It also uses the [Corquad](http://66.194.178.32/~rfinn/pisces.html) routine to correct for ghost-like detector images (so-called crosstalk). A Python based version of this program can be found [here](https://github.com/jordan-stone/ARIES).
+to install all dependencies. Furthermore, I included the packages for [CERES](https://github.com/rabrahm/ceres) and [TelFit](https://github.com/kgullikson88/Telluric-Fitter) packages in the ```\lib``` folder for convenience, but all credit goes to the corresponding authors of these software packages. Please have a look at their own documentation if you run into any issues with these packages. It also uses the [Corquad](http://66.194.178.32/~rfinn/pisces.html) routine to correct for ghost-like detector images (so-called crosstalk). A Python based version of this program can be found [here](https://github.com/jordan-stone/ARIES).
 
 ## Run the pre-processing pipeline
 After installing all dependencies one should be able to run the pre-processing pipeline. The pipeline requires input on the target and observing night. Using the following command
